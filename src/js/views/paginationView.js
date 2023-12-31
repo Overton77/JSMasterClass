@@ -17,7 +17,6 @@ class PaginationView extends View {
 
   _generateMarkup() {
     // computing how many pages there
-    console.log(this._data);
     const curPage = this._data.page;
     // the state contains the currentPage
 
