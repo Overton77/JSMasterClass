@@ -6,8 +6,6 @@ import { API_URL, RES_PER_PAGE, API_KEY } from './config.js';
 
 import { AJAX } from './helpers.js';
 
-// Load Recipe is not a pure function
-
 export const state = {
   recipe: {},
   search: {
@@ -18,6 +16,12 @@ export const state = {
   },
   bookmarks: [],
 };
+
+/**
+ *
+ * @param {Object} data - The raw data from the API
+ * @returns {Object} The processed recipe object
+ */
 
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
@@ -31,7 +35,6 @@ const createRecipeObject = function (data) {
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
-    // This is a trick to conditionally add properties to an object
   };
 };
 
@@ -66,20 +69,14 @@ export const loadSearchResults = async function (query) {
   } catch (err) {
     console.error(err);
     throw err;
-
-    // You have throw the error again so it can propogate and be used in the controller
   }
 };
 
-// A function that takes in the amount of results per the page we want to render
-
 export const getSearchResultsPage = function (page = 1) {
   state.search.page = page;
-  // return state.search.results.slice
-  // page - 1 * the amount of results to show
-  // up to page * the amount of results to show
-  const start = (page - 1) * state.search.resultsPerPage; //0;
-  const end = page * state.search.resultsPerPage; //9;
+
+  const start = (page - 1) * state.search.resultsPerPage;
+  const end = page * state.search.resultsPerPage;
 
   return state.search.results.slice(start, end);
 };
@@ -87,8 +84,6 @@ export const getSearchResultsPage = function (page = 1) {
 export const updateServings = function (newServings) {
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newServings) / state.recipe.serving;
-    // the (quantity * the new Servings) / the old servings
-    // newQt = oldQt * newServings / oldServings
   });
 
   state.recipe.serving = newServings;
@@ -99,21 +94,16 @@ const persistBookmarks = function () {
 };
 
 export const addBookmark = function (recipe) {
-  // Add bookmark -- pushing recipe object into the bookmarks
   state.bookmarks.push(recipe);
-
-  // Mark current recipe as bookmark
 
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
   persistBookmarks();
 };
 
 export const deleteBookmark = function (id) {
-  // Delete bookmark
   const index = state.bookmarks.findIndex(el => el.id === id);
   state.bookmarks.splice(index, 1);
 
-  // Mark current recipe as NOT bookmarked
   if (id === state.recipe.id) state.recipe.bookmarked = false;
   persistBookmarks();
 };
@@ -127,10 +117,6 @@ init();
 const clearBookmarks = function () {
   localStorage.clear('bookmarks');
 };
-
-// clearBookmarks();
-
-//Reformatting the uploadedRecipe object into the same data format as that of the API
 
 export const uploadRecipe = async function (newRecipe) {
   try {

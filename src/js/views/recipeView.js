@@ -2,12 +2,15 @@ import View from './View.js';
 import icons from '../../img/icons.svg';
 import fracty from 'fracty';
 
-// When importing from npm you acutally don't need to specify the full path just the package name
-// It is easiest to start with the DATA
+/**
+ *
+ * Represents the recipe view in the application.
+ * @extends View
+ */
 
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
-  // inheriting from the View each of the child Views can set their _parentElement
+
   _errorMessage = 'We could not find that recipe. Please try another one ';
   _successMessage = 'Start By Searching For A Recipe And Have Fun';
 
@@ -15,12 +18,17 @@ class RecipeView extends View {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
   }
 
+  /**
+   *
+   * @param {Function} handler - The handler function to render the recipe
+   */
+
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--update-servings');
       if (!btn) return;
       const { updateTo } = btn.dataset;
-      // when there is a dash in the property name of a data set it will be converted to camel case
+
       if (+updateTo > 0) handler(+updateTo);
     });
   }
@@ -127,8 +135,13 @@ class RecipeView extends View {
   </div>`;
   }
 
+  /**
+   *
+   * @param {Object} ing an ingredient object
+   * @returns {string} HTML string representing an ingredient
+   */
+
   _generateMarkupIngredient(ing) {
-    // return fraccty to quantity after you determine you can change quantities per newServing size
     return `  
    
     <li class="recipe__ingredient">
@@ -149,9 +162,5 @@ class RecipeView extends View {
     `;
   }
 }
-
-// This file will contain the recipeView view
-// there will be a parent class called Views that extend to their children methods
-// that all views will have
 
 export default new RecipeView();

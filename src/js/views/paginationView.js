@@ -1,6 +1,11 @@
 import View from './View.js';
 import icons from '../../img/icons.svg';
 
+/**
+ * Represents the pagination ability of the application
+ * @extends View
+ */
+
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
@@ -8,7 +13,7 @@ class PaginationView extends View {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--inline');
       if (!btn) return;
-      // It searches for parents
+
       const goToPage = +btn.dataset.goto;
 
       handler(goToPage);
@@ -16,16 +21,11 @@ class PaginationView extends View {
   }
 
   _generateMarkup() {
-    // computing how many pages there
     const curPage = this._data.page;
-    // the state contains the currentPage
 
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
-
-    // the numPages equals the length of the resultsarray
-    // divided by configuration variable the resultsPerPage
 
     console.log(numPages);
     if (curPage === 1 && numPages > 1) {
@@ -38,11 +38,7 @@ class PaginationView extends View {
         </svg>
       </button>`;
     }
-    // const numPages =
-    //   this._data.search.results.length / this._data.resultsPerPage;
-    // Page 1 and there are other pages
-    // We are on page 1 and there are no other pages
-    // Last Page
+
     if (curPage === numPages && numPages > 1) {
       return `<button data-goto="${
         curPage - 1
@@ -53,10 +49,6 @@ class PaginationView extends View {
               <span>Page ${curPage - 1}</span>
             </button>`;
     }
-
-    // Some intermediate page
-
-    // Refactor this return of the button mark up to its own function
 
     if (curPage < numPages) {
       return `<button data-goto="${

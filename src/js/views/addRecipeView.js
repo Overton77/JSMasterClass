@@ -33,12 +33,10 @@ class AddRecipeView extends View {
   addHandlerUpload(handler) {
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
-      // formData A modern browser API
+
       const dataArray = [...new FormData(this)];
       const data = Object.fromEntries(dataArray);
 
-      // this is basically opposite of the entries call of array and converts it to an Object from an Array
-      // This will give us an array with all the fields with all the data
       handler(data);
     });
   }

@@ -16,7 +16,6 @@ class SearchView {
       e.preventDefault();
       handler();
     });
-    // calling the submit permits the user clicking or pushing enter
   }
 }
 
