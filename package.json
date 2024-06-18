@@ -1,12 +1,13 @@
 {
-  "name": "overfork",
+  "name": "forkify",
   "version": "1.0.0",
   "description": "a recipe creation and storage js application",
   "default": "index.html",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --dist-dir ./dist",
-    "live": "live-server"
+    "live": "live-server", 
+    "build-and-serve": "npm run build && live-server ./dist"
   },
   "repository": {
     "type": "git",
