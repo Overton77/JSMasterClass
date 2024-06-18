@@ -23,7 +23,10 @@ Make sure you have Node.js and npm installed on your machine if you want to run 
    git clone https://github.com/Overton77/overfork.git
    ```
 
+   ```node
+
    npm install && npm run build-and-serve
+   ```
 
 
 ### 
